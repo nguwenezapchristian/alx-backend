@@ -13,8 +13,10 @@ class LFUCache(BaseCaching):
     def __init__(self):
         """
         Initializes the LFUCache class.
-        Calls the parent class (BaseCaching) initializer and initializes dictionaries
-        to keep track of the frequency of usage of the cache keys and the order of usage.
+        Calls the parent class (BaseCaching) initializer and initializes
+        dictionaries
+        to keep track of the frequency of usage of the cache keys and
+        the order of usage.
         """
         super().__init__()
         self.usage_freq = defaultdict(int)
