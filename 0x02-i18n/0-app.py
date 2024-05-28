@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+A basic Flask application which rendering a template.
+"""
 from flask import Flask, render_template
 
 app = Flask(__name__)
