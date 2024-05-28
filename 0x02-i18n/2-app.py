@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Basic Babel setup implementation.
+Basic Babel setup implementation
 """
 from flask import Flask, render_template, request
 from flask_babel import Babel, _
@@ -8,8 +8,8 @@ from flask_babel import Babel, _
 
 class Config:
     """
-    Configuration class for Flask application.
-    Contains language and timezone settings.
+    In order to configure available languages in our app, you will create
+    a Config class that has a LANGUAGES class attribute equal to ["en", "fr"]
     """
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
@@ -20,38 +20,20 @@ app = Flask(__name__)
 app.config.from_object(Config)
 babel = Babel(app)
 
-""" Check if the Babel object has the localeselector method """
-if hasattr(babel, 'localeselector'):
-    @babel.localeselector
-    def get_locale() -> str:
-        """
-        Get the best match locale from the request.
 
-        Returns:
-            str: Best match language.
-        """
-        return request.accept_languages.best_match(app.config['LANGUAGES'])
-else:
-    """ Fallback to setting the locale selector function manually """
-    def get_locale() -> str:
-        """
-        Get the best match locale from the request.
-
-        Returns:
-            str: Best match language.
-        """
-        return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-    babel.localeselector_func = get_locale
+@babel.localeselector
+def get_locale():
+    """ Get locale from request """
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route('/', strict_slashes=False)
-def hello() -> str:
+def hello():
     """
-    Render the 2-index.html template for the root URL.
+    Render the index.html template for the root URL.
 
     Returns:
-        str: Rendered HTML of the 2-index.html template.
+        str: Rendered HTML of the index.html template.
     """
     return render_template("2-index.html")
 
